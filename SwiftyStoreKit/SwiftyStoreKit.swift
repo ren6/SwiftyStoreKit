@@ -46,6 +46,10 @@ public class SwiftyStoreKit {
         return productsInfoController.retrieveProductsInfo(productIds, completion: completion)
     }
     
+    fileprivate func retrieveProductsInfo(_ productIds: Set<String>, forceReload: Bool = false, completion: @escaping (RetrieveResults) -> Void) {
+        return productsInfoController.retrieveProductsInfo(productIds, forceReload: forceReload, completion: completion)
+    }
+    
     fileprivate func purchaseProduct(_ productId: String, quantity: Int = 1, atomically: Bool = true, applicationUsername: String = "", simulatesAskToBuyInSandbox: Bool = false, completion: @escaping ( PurchaseResult) -> Void) {
 
         retrieveProductsInfo(Set([productId])) { result -> Void in
@@ -152,6 +156,10 @@ extension SwiftyStoreKit {
     public class func retrieveProductsInfo(_ productIds: Set<String>, completion: @escaping (RetrieveResults) -> Void) {
 
         return sharedInstance.retrieveProductsInfo(productIds, completion: completion)
+    }
+    
+    public class func retrieveProductsInfo(_ productIds: Set<String>, forceReload: Bool = false, completion: @escaping (RetrieveResults) -> Void) {
+        return sharedInstance.retrieveProductsInfo(productIds, forceReload: forceReload, completion: completion)
     }
 
     /**
