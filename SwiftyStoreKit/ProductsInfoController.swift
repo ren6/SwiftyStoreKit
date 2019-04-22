@@ -52,8 +52,13 @@ class ProductsInfoController: NSObject {
     private var inflightRequests: [Set<String>: InAppProductQuery] = [:]
 
     func retrieveProductsInfo(_ productIds: Set<String>, completion: @escaping (RetrieveResults) -> Void) {
+        retrieveProductsInfo(productIds, forceReload: false, completion: completion)
+    }
+    
+    func retrieveProductsInfo(_ productIds: Set<String>, forceReload: Bool = false, completion: @escaping (RetrieveResults) -> Void) {
 
-        if inflightRequests[productIds] == nil {
+        if inflightRequests[productIds] == nil || forceReload {
+            inflightRequests[productIds] = nil
             let request = inAppProductRequestBuilder.request(productIds: productIds) { results in
                 
                 if let query = self.inflightRequests[productIds] {
